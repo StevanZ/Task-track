@@ -1,10 +1,45 @@
 .task-list {
   width: 100vw;
   height: 100vh;
-  //   background-image: url("/src/images/background.jpg");
   background-size: cover;
   background-position: center;
   position: relative;
+  padding: 10px;
+
+  .tasks {
+    margin-top: 90px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 15px;
+
+    .task {
+      background: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      width: 280px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+      .task-title {
+        font-size: 1.2em;
+        font-weight: 500;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .task-content {
+        padding: 20px 10px;
+        height: 200px;
+        font-size: 1em;
+        color: #666;
+      }
+
+      .task-footer {
+        border-top: 1px solid #ccc;
+        padding-top: 10px;
+        @include flex-center(flex-start);
+      }
+    }
+  }
 
   .background {
     position: absolute;
@@ -12,8 +47,67 @@
     left: 0;
     width: 100%;
     height: 100%;
-    // bottom: 0;
-    // right: 0;
     z-index: -1;
+  }
+}
+
+.form-wraper {
+  @include flex-center(center);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  // transform: translate(-50%, -50%);
+  .task-form {
+    // position: fixed;
+    // top: 50%;
+    // left: 50%;
+    // transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    z-index: 1;
+    transition: transform 0.3s;
+
+    .form-group {
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        font-size: 1.1em;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        font-size: 1em;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        outline: none;
+      }
+    }
+
+    .btn {
+      background: #f8f8f8;
+      padding: 8px 16px;
+      border-radius: 3px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      color: #333;
+      border: none;
+      outline: none;
+
+      &:hover {
+        background: #e8e8e8;
+      }
+    }
   }
 }

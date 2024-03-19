@@ -1,8 +1,23 @@
-import Board from "../board/Board";
 import Header from "../header/Header";
 import paperBackground from "../../assets/images/paper-background.jpg";
+import { useEffect, useState } from "react";
+import { getTasks } from "../../services/todoistService";
+import { TaskModel } from "../../models/tasks";
+import Task from "./Task";
+import TaskForm from "./TaskForm";
 
 const TaskList = () => {
+  const [tasks, setTasks] = useState<TaskModel[]>([]);
+
+  const fetchTasks = async () => {
+    const tasks = await getTasks();
+    setTasks(tasks);
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
   return (
     <div className="task-list">
       <div
@@ -12,13 +27,16 @@ const TaskList = () => {
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          // filter: "blur(4px)",
           opacity: 0.3,
         }}
       />
-
       <Header />
-      <Board />
+      <div className="tasks">
+        {tasks.map((task) => {
+          return <Task key={task.id} task={task} />;
+        })}
+      </div>
+      <TaskForm />
     </div>
   );
 };

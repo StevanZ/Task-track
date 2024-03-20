@@ -2,8 +2,6 @@ import { MdEmojiPeople } from "react-icons/md";
 import { TaskModel } from "../../models/tasks";
 import { GrInProgress } from "react-icons/gr";
 import { TiInputCheckedOutline } from "react-icons/ti";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../store/store";
 
 interface TaskProps {
   task: TaskModel;
@@ -11,7 +9,7 @@ interface TaskProps {
 
 const Task = ({ task }: TaskProps) => {
   const asignTo = task.labels && task.labels[0] ? task.labels[0] : "Unassigned";
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
 
   // const handleCheck = () => {
   //   if (task.id) {

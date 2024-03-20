@@ -1,12 +1,19 @@
 import { useState } from "react";
 import { useGlobalContext } from "../../context";
+import { FaPlus, FaTimes } from "react-icons/fa";
+import { createTask } from "../../services/todoistService";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { addTask } from "../../slices/taskSlice";
 
 const TaskForm = () => {
+  const [assigneeName, setAssigneeName] = useState<string>("");
   const [formData, setFormData] = useState({
-    title: "",
+    content: "",
     description: "",
-    person: "",
   });
+
+  const dispatch = useDispatch<AppDispatch>();
 
   const { isFormOpen, setIsFormOpen } = useGlobalContext();
 
@@ -14,9 +21,30 @@ const TaskForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+    const task = {
+      ...formData,
+      labels: [assigneeName],
+    };
+    // const createdTask = await createTask(task);
+    dispatch(addTask(task));
+  };
+
+  const handleAssigneeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAssigneeName(e.target.value);
+  };
+
+  const renderInput = (name: string, value: string) => {
+    return (
+      <input
+        key={name}
+        type="text"
+        name={name}
+        value={value}
+        onChange={handleChange}
+      />
+    );
   };
 
   return (
@@ -25,33 +53,25 @@ const TaskForm = () => {
       className="form-wraper"
     >
       <form className="task-form" onSubmit={handleSubmit}>
+        {Object.entries(formData).map(([name, value]) => {
+          return renderInput(name, value);
+        })}
         <input
           type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="person"
-          value={formData.person}
-          onChange={handleChange}
+          name="assigneeName"
+          value={assigneeName}
+          onChange={handleAssigneeChange}
+          placeholder="Assignee name"
         />
         <button type="submit" className="btn">
-          Add task
+          <FaPlus /> Add task
         </button>
         <button
-          className="btn"
+          className="btn close-btn"
           type="button"
           onClick={() => setIsFormOpen(false)}
         >
-          Close
+          <FaTimes />
         </button>
       </form>
     </div>

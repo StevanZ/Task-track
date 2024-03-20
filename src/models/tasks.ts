@@ -1,15 +1,15 @@
 export interface TaskModel {
-  creatorId?: string;
-  createdAt?: string;
-  assigneeId?: null | string | undefined;
-  assignerId?: null | string | undefined;
-  commentCount?: number;
-  isCompleted?: boolean;
+  creator_id?: string;
+  created_at?: string;
+  assignee_id?: null | string | undefined;
+  assigner_id?: null | string | undefined;
+  comment_count?: number;
+  is_completed?: boolean;
   content: string;
   description?: string;
   due?: {
     date?: string;
-    isRecurring?: boolean;
+    is_recurring?: boolean;
     datetime?: string | null;
     string?: string;
     timezone?: string | null;
@@ -22,8 +22,8 @@ export interface TaskModel {
   labels?: string[];
   order?: number;
   priority?: number;
-  projectId?: string;
-  sectionId?: null | string;
-  parentId?: null | string;
+  project_id?: string;
+  section_id?: null | string;
+  parent_id?: null | string;
   url?: string;
 }

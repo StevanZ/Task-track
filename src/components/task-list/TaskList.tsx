@@ -1,22 +1,21 @@
 import Header from "../header/Header";
 import paperBackground from "../../assets/images/paper-background.jpg";
-import { useEffect, useState } from "react";
-import { getTasks } from "../../services/todoistService";
-import { TaskModel } from "../../models/tasks";
+import { useEffect } from "react";
 import Task from "./Task";
 import TaskForm from "./TaskForm";
+import { fetchTasks } from "../../slices/taskSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+import { AppDispatch, AppRootState } from "../../store/store";
 
 const TaskList = () => {
-  const [tasks, setTasks] = useState<TaskModel[]>([]);
-
-  const fetchTasks = async () => {
-    const tasks = await getTasks();
-    setTasks(tasks);
-  };
+  // const [tasks, setTasks] = useState<TaskModel[]>([]);
+  const tasks = useSelector((state: AppRootState) => state.tasks.tasks);
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    fetchTasks();
-  }, []);
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   return (
     <div className="task-list">

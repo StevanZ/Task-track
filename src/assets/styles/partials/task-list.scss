@@ -24,6 +24,7 @@
         font-size: 1.2em;
         font-weight: 500;
         border-bottom: 1px solid #ccc;
+        @include flex-center(space-between);
       }
 
       .task-content {
@@ -61,10 +62,7 @@
   background-color: rgba(0, 0, 0, 0.5);
   // transform: translate(-50%, -50%);
   .task-form {
-    // position: fixed;
-    // top: 50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
+    position: relative;
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 5px;
@@ -73,24 +71,24 @@
     z-index: 1;
     transition: transform 0.3s;
 
+    label {
+      display: block;
+      font-size: 1.1em;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      outline: none;
+    }
+
     .form-group {
       margin-bottom: 20px;
-
-      label {
-        display: block;
-        font-size: 1.1em;
-        font-weight: 500;
-        margin-bottom: 5px;
-      }
-
-      input {
-        width: 100%;
-        padding: 10px;
-        font-size: 1em;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        outline: none;
-      }
     }
 
     .btn {
@@ -108,6 +106,15 @@
       &:hover {
         background: #e8e8e8;
       }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: red;
     }
   }
 }

@@ -17,9 +17,18 @@ export const getTasks = async () => {
 
 export const createTask = async (task: TaskModel) => {
   try {
-    await api.addTask(task);
+    return await api.addTask(task);
   } catch (error) {
     console.error("Error creating task:", error);
+    throw error;
+  }
+};
+
+export const updateTask = async (id: string, updated: TaskModel) => {
+  try {
+    return await api.updateTask(id, updated);
+  } catch (error) {
+    console.error("Error updating task:", error);
     throw error;
   }
 };

@@ -32,7 +32,7 @@ const TaskList = () => {
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          alignItems: tasks.length > 1 ? "center" : "",
+          alignItems: "center",
         }}
       >
         <Header />
@@ -42,7 +42,7 @@ const TaskList = () => {
           <div
             className="tasks"
             style={{
-              justifyContent: tasks.length < 2 ? "flex-start" : "center",
+              justifyContent: "flex-start",
             }}
           >
             {loading && <div className="loader"></div>}

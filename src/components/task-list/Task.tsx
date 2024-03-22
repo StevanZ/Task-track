@@ -68,9 +68,8 @@ const Task = ({ task, index, moveTask, setTaskForEdit }: TaskProps) => {
 
   const handleDeleteTask = () => {
     if (!task.id) return;
-    const notifyId = toast("Deleting task...");
+
     dispatch(deleteTaskAction(task.id)).then(() => {
-      toast.dismiss(notifyId);
       toast.success("Task deleted", {
         autoClose: 1500,
       });

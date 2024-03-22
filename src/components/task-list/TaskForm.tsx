@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useGlobalContext } from "../../context";
 import { FaPlus, FaTimes } from "react-icons/fa";
-import { createTask } from "../../services/todoistService";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { addTask } from "../../slices/taskSlice";
+import { toast } from "react-toastify";
+import SelectPerson from "../select-person/SelectPerson";
 
 const TaskForm = () => {
   const [assigneeName, setAssigneeName] = useState<string>("");
@@ -12,6 +13,8 @@ const TaskForm = () => {
     content: "",
     description: "",
   });
+
+  const [selecctStatus, setSelecctStatus] = useState("");
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -21,17 +24,44 @@ const TaskForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const task = {
-      ...formData,
-      labels: [assigneeName],
-    };
-    // const createdTask = await createTask(task);
-    dispatch(addTask(task));
+  const resetForm = () => {
+    setFormData({ content: "", description: "" });
+    setAssigneeName("");
   };
 
-  const handleAssigneeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log("form data", formData);
+
+    if (!formData.content || !formData.description || !assigneeName) {
+      const notifyId = toast("Please fill all fields");
+      setTimeout(() => {
+        toast.dismiss(notifyId);
+      }, 1000);
+      return;
+    }
+
+    const task = {
+      ...formData,
+      labels: [assigneeName, "in progress"],
+    };
+
+    setIsFormOpen(false);
+    resetForm();
+    const toastId = toast("Adding task...");
+    dispatch(addTask(task)).then(() => {
+      toast.dismiss(toastId);
+      toast.success("Task added", {
+        autoClose: 1500,
+      });
+    });
+  };
+
+  const handleAssigneeChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    console.log("E", e.target.value);
     setAssigneeName(e.target.value);
   };
 
@@ -52,18 +82,23 @@ const TaskForm = () => {
       style={{ display: isFormOpen ? "flex" : "none" }}
       className="form-wraper"
     >
-      <form className="task-form" onSubmit={handleSubmit}>
+      <form
+        className={`task-form ${isFormOpen ? "show" : 0}`}
+        onSubmit={handleSubmit}
+      >
+        <h2 className="form-title">Add task</h2>
         {Object.entries(formData).map(([name, value]) => {
           return renderInput(name, value);
         })}
-        <input
-          type="text"
-          name="assigneeName"
+
+        <SelectPerson
           value={assigneeName}
-          onChange={handleAssigneeChange}
-          placeholder="Assignee name"
+          name="assigneeName"
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            handleAssigneeChange(e)
+          }
         />
-        <button type="submit" className="btn">
+        <button type="submit" className="btn add-task-btn">
           <FaPlus /> Add task
         </button>
         <button

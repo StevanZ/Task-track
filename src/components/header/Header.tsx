@@ -8,25 +8,27 @@ const Header = () => {
 
   return (
     <header>
-      <span className="board-name">TASK TRACK</span>
-      <div className="filters-wrapper">
-        <Filters />
-        <div
-          onClick={() => setIsFilterOpen(!isFilterOpen)}
-          className="toggle-filters"
-        >
-          <IoFilterSharp />
-        </div>
+      <div className="nav-center">
+        <span className="board-name">TASK TRACK</span>
+        <div className="filters-wrapper">
+          <Filters />
+          <div
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className="toggle-filters"
+          >
+            <IoFilterSharp />
+          </div>
 
-        <button
-          onClick={() => {
-            setIsFilterOpen(false);
-            setIsFormOpen(true);
-          }}
-          className="btn add-task"
-        >
-          <FaPlus /> Add task
-        </button>
+          <button
+            onClick={() => {
+              setIsFilterOpen(false);
+              setIsFormOpen(true);
+            }}
+            className="btn add-task"
+          >
+            <FaPlus /> Add task
+          </button>
+        </div>
       </div>
     </header>
   );

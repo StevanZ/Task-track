@@ -32,13 +32,19 @@ const TaskList = () => {
           backgroundPosition: "center",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
+          alignItems: tasks.length > 1 ? "center" : "",
         }}
       >
         <Header />
         {tasks.length === 0 && !loading ? (
           <p className="no-tasks">No tasks yet...</p>
         ) : (
-          <div className="tasks">
+          <div
+            className="tasks"
+            style={{
+              justifyContent: tasks.length < 2 ? "flex-start" : "center",
+            }}
+          >
             {loading && <div className="loader"></div>}
             {tasks.map((task, index) => {
               return (

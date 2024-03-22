@@ -1,5 +1,5 @@
 For this project I used the following.
-For css I used a preprocessor, scss. He enabled me to easily structure css, as well as mixins, loops and a lot of other things.
+For css I used a preprocessor,scss. He enabled me to easily structure css, as well as mixins, loops and a lot of other things.
 For the global state I used the redux toolkit.
 For some simpler states I used react context. Let's say for opening and closing modals in different places in the project.
 The application is written in Typescript. I used types and interfaces from it to build models.

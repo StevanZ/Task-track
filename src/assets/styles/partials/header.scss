@@ -1,5 +1,6 @@
 header {
   width: 100vw;
+  // max-width: 1200px;
   @include flex-center(space-between);
   position: fixed;
   top: 0;
@@ -7,6 +8,7 @@ header {
   height: 85px;
   padding: 0 20px;
   color: #f8f8f8;
+  z-index: 10;
 
   &::before {
     content: "";

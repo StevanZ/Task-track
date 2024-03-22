@@ -27,3 +27,10 @@ export interface TaskModel {
   parent_id?: null | string;
   url?: string;
 }
+
+export interface TasksState {
+  originalTasks: TaskModel[];
+  tasks: TaskModel[];
+  loading: boolean;
+  error: boolean;
+}

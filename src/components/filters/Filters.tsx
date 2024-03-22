@@ -11,11 +11,6 @@ interface FilterDataModel {
 }
 
 const Filters = () => {
-  // const [filterData, setFilterData] = useState<FilterDataModel>({
-  //   assigneeName: "",
-  //   taskStatus: "",
-  // });
-
   const [selectedProgress, setSelectedProgress] = useState("");
   const [selectedPerson, setSelectedPerson] = useState("");
 
@@ -24,7 +19,6 @@ const Filters = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const resetFilter = () => {
-    // setFilterData({ assigneeName: "", taskStatus: "" });
     setSelectedProgress("");
     setSelectedPerson("");
   };
@@ -52,17 +46,20 @@ const Filters = () => {
           setSelectedPerson(e.target.value)
         }
       />
-      <select
-        name="taskStatus"
-        value={selectedProgress}
-        onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-          setSelectedProgress(e.target.value)
-        }
-      >
-        <option value="">All</option>
-        <option value="completed">Completed</option>
-        <option value="in progress">In progress</option>
-      </select>
+      <label htmlFor="">
+        Task progress
+        <select
+          name="taskStatus"
+          value={selectedProgress}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+            setSelectedProgress(e.target.value)
+          }
+        >
+          <option value="">All tasks</option>
+          <option value="completed">Completed</option>
+          <option value="in progress">In progress</option>
+        </select>
+      </label>
 
       <div className="buttons-wrapper">
         <button className="clear-filters" onClick={handleClearFilters}>

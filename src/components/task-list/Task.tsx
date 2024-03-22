@@ -8,17 +8,19 @@ import { AppDispatch } from "../../store/store";
 import { deleteTaskAction, update } from "../../slices/taskSlice";
 import { useDrag, useDrop } from "react-dnd";
 import { toast } from "react-toastify";
-import { FaTrash } from "react-icons/fa";
+import { FaRegEdit, FaTrash } from "react-icons/fa";
+import { useGlobalContext } from "../../context";
 
 interface TaskProps {
   task: TaskModel;
   index: number;
   dragIndex: number;
   hoverIndex: number;
+  setTaskForEdit: (task: TaskModel) => void;
   moveTask: (dragIndex: number, hoverIndex: number) => any;
 }
 
-const Task = ({ task, index, moveTask }: TaskProps) => {
+const Task = ({ task, index, moveTask, setTaskForEdit }: TaskProps) => {
   const [{ isDragging }, drag] = useDrag({
     type: "task",
     item: { id: task.id, index },
@@ -26,6 +28,8 @@ const Task = ({ task, index, moveTask }: TaskProps) => {
       isDragging: monitor.isDragging(),
     }),
   });
+
+  const { setIsFormOpen } = useGlobalContext();
 
   const [, drop] = useDrop({
     accept: "task",
@@ -44,12 +48,6 @@ const Task = ({ task, index, moveTask }: TaskProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  // const handleCloseTask = () => {
-  //   if (task.id) {
-  //     dispatch(closeTaskAction(task.id));
-  //   }
-  // };
-
   const handleUpdateTask = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updatedLabels = task.labels ? [...task.labels] : [];
     updatedLabels[1] = e.target.checked ? "completed" : "in progress";
@@ -59,9 +57,7 @@ const Task = ({ task, index, moveTask }: TaskProps) => {
       labels: updatedLabels,
     };
 
-    const notifyId = toast("Updating task...");
     dispatch(update(updatedTask)).then(() => {
-      toast.dismiss(notifyId);
       toast.success("Task updated", {
         autoClose: 1500,
       });
@@ -81,13 +77,17 @@ const Task = ({ task, index, moveTask }: TaskProps) => {
     });
   };
 
+  const handleEditTask = () => {
+    setIsFormOpen(true);
+    setTaskForEdit(task);
+  };
+
   return (
-    <div ref={drop} style={{ opacity }}>
+    <div className="dragable-wrapper" ref={drop} style={{ opacity }}>
       <div ref={drag}>
         <div className={`task ${isCompleted ? "completed" : ""}`}>
           <div className="task-title">
-            {task.content}
-            <div className="icons-wrapper">
+            <div className="title-wrapper">
               {isCompleted ? (
                 <TiInputCheckedOutline
                   title="Completed"
@@ -99,6 +99,11 @@ const Task = ({ task, index, moveTask }: TaskProps) => {
                   style={{ color: "darkorange" }}
                 />
               )}
+              {task.content}
+            </div>
+
+            <div className="icons-wrapper">
+              <FaRegEdit onClick={handleEditTask} className="edit-icon" />
               <FaTrash onClick={handleDeleteTask} className="trash-can" />
             </div>
           </div>

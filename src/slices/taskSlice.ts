@@ -1,20 +1,11 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TaskModel } from "../models/tasks";
+import { TaskModel, TasksState } from "../models/tasks";
 import {
-  closeTask,
   createTask,
   deleteTask,
-  getProjects,
   getTasks,
   updateTask,
 } from "../services/todoistService";
-
-interface TasksState {
-  originalTasks: TaskModel[];
-  tasks: TaskModel[];
-  loading: boolean;
-  error: boolean;
-}
 
 const initialState: TasksState = {
   originalTasks: [],
@@ -41,22 +32,6 @@ export const update = createAsyncThunk(
   async (task: TaskModel) => {
     const updatedTask = await updateTask(task.id as string, task);
     return updatedTask;
-  }
-);
-
-export const fetchProjects = createAsyncThunk(
-  "tasks/fetchProjects",
-  async () => {
-    const projects = await getProjects();
-    return projects;
-  }
-);
-
-export const closeTaskAction = createAsyncThunk(
-  "tasks/closeTask",
-  async (id: string) => {
-    await closeTask(id);
-    return id;
   }
 );
 
@@ -145,6 +120,9 @@ const taskSlice = createSlice({
     builder.addCase(deleteTaskAction.fulfilled, (state, action) => {
       state.loading = false;
       state.tasks = state.tasks.filter((task) => task.id !== action.payload);
+      state.originalTasks = state.originalTasks.filter(
+        (task) => task.id !== action.payload
+      );
     });
   },
 });

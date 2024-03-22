@@ -5,7 +5,17 @@
   background-position: center;
   position: relative;
   padding: 10px;
-  overflow-y: scroll;
+  overflow-y: auto;
+
+  .no-tasks {
+    text-align: center;
+    font-size: 1.5em;
+    color: #333;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   .tasks {
     margin-top: 90px;
@@ -14,18 +24,32 @@
     justify-content: flex-start;
     gap: 15px;
 
-    @media (max-width: 1366px) {
+    @media (max-width: 895px) {
       justify-content: center;
+    }
+
+    .dragable-wrapper {
+      @media (max-width: 895px) {
+        width: 45%;
+      }
+
+      @media (max-width: 730px) {
+        width: 100%;
+        min-width: 250px;
+      }
     }
 
     .task {
       background: rgba(255, 255, 255, 1);
       padding: 20px;
       width: 280px;
-      max-width: 280px;
-      flex-grow: 1;
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+      @media (max-width: 895px) {
+        // flex-grow: 1;
+        width: 100%;
+      }
 
       &.completed {
         opacity: 0.9;
@@ -51,6 +75,11 @@
         font-weight: 500;
         border-bottom: 1px solid #ccc;
         @include flex-center(space-between);
+
+        .title-wrapper {
+          @include flex-center(flex-start);
+          gap: 5px;
+        }
 
         .icons-wrapper {
           @include flex-center(flex-end);
@@ -81,6 +110,15 @@
               100% {
                 transform: translateX(0);
               }
+            }
+          }
+
+          .edit-icon {
+            cursor: pointer;
+            color: #333;
+
+            &:hover {
+              color: #7091b3;
             }
           }
         }
@@ -133,7 +171,6 @@
     -webkit-transform: translateY(-200%);
     -ms-transform: translateY(-200%);
     transform: translateY(-200%);
-    text-align: center;
     position: relative;
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
@@ -142,6 +179,10 @@
     width: 40%;
     z-index: 1;
     transition: transform 0.3s;
+
+    @media (max-width: 900px) {
+      width: 80%;
+    }
 
     &.show {
       -webkit-transform: translateY(0);
@@ -156,10 +197,6 @@
       color: #333;
       margin: 0;
     }
-
-    // > input {
-    //   margin-bottom: 10px;
-    // }
 
     label {
       display: block;

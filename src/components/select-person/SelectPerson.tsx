@@ -10,18 +10,19 @@ interface SelectPersonProps {
 
 const SelectPerson = ({ onChange, name, value }: SelectPersonProps) => {
   return (
-    <select value={value} onChange={onChange} name={name} id="person">
-      <option value="" disabled>
-        Assignee
-      </option>
-      {people.map((person: PersonModel) => {
-        return (
-          <option key={person.id} value={person.name}>
-            {person.name}
-          </option>
-        );
-      })}
-    </select>
+    <label>
+      Assignee
+      <select value={value} onChange={onChange} name={name} id="person">
+        <option value="">All</option>
+        {people.map((person: PersonModel) => {
+          return (
+            <option key={person.id} value={person.name}>
+              {person.name}
+            </option>
+          );
+        })}
+      </select>
+    </label>
   );
 };
 export default SelectPerson;

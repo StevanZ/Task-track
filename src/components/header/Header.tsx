@@ -2,7 +2,7 @@ import { FaPlus } from "react-icons/fa";
 import { IoFilterSharp } from "react-icons/io5";
 import { useGlobalContext } from "../../context";
 import Filters from "../filters/Filters";
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 const Header = () => {
   const { setIsFormOpen, isFilterOpen, setIsFilterOpen } = useGlobalContext();

@@ -18,6 +18,7 @@
   }
 
   .tasks {
+    max-width: 1200px;
     margin-top: 90px;
     display: flex;
     flex-wrap: wrap;
@@ -245,6 +246,11 @@
       &:hover {
         background-color: rgba($add-task-btn, 0.9);
       }
+    }
+
+    .add-task-span,
+    .edit-task-span {
+      @include flex-center(center);
     }
 
     .close-btn {

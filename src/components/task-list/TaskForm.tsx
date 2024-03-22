@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "../../context";
-import { FaPlus, FaTimes } from "react-icons/fa";
+import { FaPlus, FaRegEdit, FaTimes } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { addTask, update } from "../../slices/taskSlice";
@@ -93,6 +93,8 @@ const TaskForm = ({ taskForEdit, setTaskForEdit }: TaskFormProps) => {
     setAssigneeName(e.target.value);
   };
 
+  console.log("taskForEdit", taskForEdit);
+
   return (
     <div
       style={{ display: isFormOpen ? "flex" : "none" }}
@@ -137,7 +139,15 @@ const TaskForm = ({ taskForEdit, setTaskForEdit }: TaskFormProps) => {
           }
         />
         <button type="submit" className="btn add-task-btn">
-          <FaPlus /> Add task
+          {taskForEdit ? (
+            <span className="edit-span">
+              <FaRegEdit /> Edit
+            </span>
+          ) : (
+            <span className="add-span">
+              <FaPlus /> Add task
+            </span>
+          )}
         </button>
         <button
           className="btn close-btn"
